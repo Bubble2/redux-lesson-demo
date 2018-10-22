@@ -1,27 +1,22 @@
 import {
-    FETCH_DATA,
-    SHOW_LOADING,
-    HIDE_LOADING
+    FETCHING_DATA,
+    FETCHED_DATA
 } from './constants';
 
-const showLoading = () => ({
-    type:SHOW_LOADING
+
+const fetchingData = () => ({
+    type: FETCHING_DATA
 })
 
-const hideLoading = () => ({
-    type:HIDE_LOADING
-})
-
-const fetchData = data => ({
-    type:FETCH_DATA,
+const fetchedData = (data) => ({
+    type:FETCHED_DATA,
     data
 })
 
 
 export {
-    showLoading,
-    hideLoading,
-    fetchData
+    fetchingData,
+    fetchedData
 }
 
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import {showLoading, hideLoading, fetchData} from './redux/actions'
+import {fetchingData, fetchedData} from './redux/actions'
 
 //Satin
 class Satin extends Component {
@@ -12,27 +12,26 @@ class Satin extends Component {
   }
 
   loadData(){
-    const {showLoading, hideLoading, fetchData} = this.props;
-    showLoading();
+    const {fetchingData, fetchedData} = this.props;
+    fetchingData();
     axios.get('https://www.apiopen.top/satinApi?type=1&page=1').then(res => {
         const data = res.data;
         if(data && data.data.length > 0){
-            hideLoading();
-            fetchData(data.data);
+            fetchedData(data.data);
         }
     })
   }
   
   render() {
-    const {satinData, isLoading} = this.props;
+    const {satin} = this.props;
     return (
       <div className="wrap">
         <p>demo2</p>
         <button onClick={this.loadData}>加载数据</button>
         <div>
           {
-            isLoading?'LOADING...':
-            <ul>{satinData&&satinData.map((item, index) => {
+            satin.isFetching?'LOADING...':
+            <ul>{satin.items&&satin.items.map((item, index) => {
               return <li key={item.t}>{item.text}</li>
             })}</ul>
           }
@@ -44,16 +43,14 @@ class Satin extends Component {
 
 const mapStateToProps = state => {
   return {
-    satinData: state.satinData,
-    isLoading: state.isLoading
+    satin: state.satin
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-    showLoading,
-    hideLoading,
-    fetchData
+    fetchingData,
+    fetchedData
   }, dispatch)
 }
 

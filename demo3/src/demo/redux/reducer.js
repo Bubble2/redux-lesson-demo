@@ -1,26 +1,19 @@
 import {combineReducers} from 'redux';
 import {
-    FETCH_DATA,
-    SHOW_LOADING,
-    HIDE_LOADING
+    FETCHING_DATA,
+    FETCHED_DATA
 } from './constants';
 
 //reducer
-const isLoading = (state = false, action) => {
+const satin = (state={
+    items:[],
+    isFetching: false
+}, action) => {
     switch(action.type){
-        case SHOW_LOADING:
-            return true;
-        case HIDE_LOADING:
-            return false;
-        default:
-            return state;
-    }
-}
-
-const satinData = (state=[], action) => {
-    switch(action.type){
-        case FETCH_DATA:
-            return action.data;
+        case FETCHING_DATA:
+            return {...state, isFetching: true};
+        case FETCHED_DATA:
+            return {...state, items: action.data, isFetching: false};
         default:
             return state;
     }
@@ -28,8 +21,7 @@ const satinData = (state=[], action) => {
 
 //合并reducer
 const rootReducer = combineReducers({
-    satinData,
-    isLoading
+    satin
 })
 
 export default rootReducer;

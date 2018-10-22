@@ -1,34 +1,28 @@
 import axios from 'axios';
 import {
-    FETCH_DATA,
-    SHOW_LOADING,
-    HIDE_LOADING
+    FETCHING_DATA,
+    FETCHED_DATA
 } from './constants';
 
-const showLoading = () => ({
-    type:SHOW_LOADING
+
+const fetchingData = () => ({
+    type: FETCHING_DATA
 })
 
-const hideLoading = () => ({
-    type:HIDE_LOADING
-})
-
-const fetchData = data => ({
-    type:FETCH_DATA,
+const fetchedData = (data) => ({
+    type:FETCHED_DATA,
     data
 })
 
 const fetchDataAsync = () => dispatch => {
-    dispatch(showLoading());
+    dispatch(fetchingData());
     axios.get('https://www.apiopen.top/satinApi?type=1&page=1').then(res => {
         const data = res.data;
         if(data && data.data.length > 0){
-            dispatch(hideLoading());
-            dispatch(fetchData(data.data))
+            dispatch(fetchedData(data.data))
         }
     })
 }
-
 
 export {
     fetchDataAsync

@@ -9,15 +9,15 @@ class Satin extends Component {
     super(props)
   }
   render() {
-    const {satinData, fetchDataAsync, isLoading} = this.props;
+    const {satin, fetchDataAsync} = this.props;
     return (
       <div className="wrap">
-        <p>demo2</p>
+        <p>demo4</p>
         <button onClick={fetchDataAsync}>加载数据</button>
         <div>
           {
-            isLoading?'LOADING...':
-            <ul>{satinData&&satinData.map((item, index) => {
+            satin.isFetching?'LOADING...':
+            <ul>{satin.items&&satin.items.map((item) => {
               return <li key={item.t}>{item.text}</li>
             })}</ul>
           }
@@ -29,8 +29,7 @@ class Satin extends Component {
 
 const mapStateToProps = state => {
   return {
-    satinData: state.satinData,
-    isLoading: state.isLoading
+    satin: state.satin
   }
 }
 
