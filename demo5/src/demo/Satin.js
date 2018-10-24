@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import {fetchDataAsync} from './redux/actions'
+import {fetchDataAsync, setReaded} from './redux/actions'
 
 //Satin
 class Satin extends Component {
@@ -9,16 +9,22 @@ class Satin extends Component {
     super(props)
   }
   render() {
-    const {satin, fetchDataAsync} = this.props;
+    const {satin, fetchDataAsync, setReaded} = this.props;
     return (
       <div className="wrap">
-        <p>demo4,redux async with middlewares</p>
+        <p>demo5,redux and immutable</p>
         <button onClick={fetchDataAsync}>加载数据</button>
         <div>
           {
-            satin.isFetching?'LOADING...':
-            <ul>{satin.items&&satin.items.map((item) => {
-              return <li key={item.t}>{item.text}</li>
+            satin.get('isFetching')?'LOADING...':
+            <ul>{satin.get('items')&&satin.get('items').map((item) => {
+              return (<li key={item.get('t')}>
+                {item.get('isRead')?<span style={{'color':'gray'}}>已读---</span>:''}
+                {item.get('text')}---
+                <a href="javascript:;" onClick={() => setReaded(item.get('t'))}>
+                标记为已读
+                </a>
+              </li>)      
             })}</ul>
           }
         </div>
@@ -35,7 +41,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-    fetchDataAsync
+    fetchDataAsync,
+    setReaded
   }, dispatch)
 }
 

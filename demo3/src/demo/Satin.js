@@ -26,7 +26,7 @@ class Satin extends Component {
     const {satin} = this.props;
     return (
       <div className="wrap">
-        <p>demo2</p>
+        <p>demo2,redux async</p>
         <button onClick={this.loadData}>加载数据</button>
         <div>
           {
