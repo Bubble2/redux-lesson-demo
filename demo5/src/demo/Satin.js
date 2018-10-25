@@ -35,7 +35,7 @@ class Satin extends Component {
 
 const mapStateToProps = state => {
   return {
-    satin: state.satin
+    satin: state.get('satin')
   }
 }
 
